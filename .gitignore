@@ -1,3 +1,7 @@
 # Ignore macOS system files used to store folder metadata
 .DS_Store
 
+__pycache__/
+*.pyc
+HW/hw02/.ok_*
+Lab/**/.ok_*
