@@ -26,7 +26,7 @@ def middle(a, b, c):
     >>> middle(30, 5, 40)
     30
     """
-    return 
+    return a + b + c -  max(a, b, c) - min(a, b, c)
 
 
 def falling(n, k):
@@ -41,8 +41,13 @@ def falling(n, k):
     >>> falling(4, 0)
     1
     """
-    "*** YOUR CODE HERE ***"
-
+    "*** YO_UR CODE HERE ***"
+    result = 1
+    
+    for _ in range(k):
+        result *= n
+        n -= 1
+    return result
 
 def divisible_by_k(n, k):
     """
@@ -65,6 +70,12 @@ def divisible_by_k(n, k):
     0
     """
     "*** YOUR CODE HERE ***"
+    result = 0
+    for i in range(1, n + 1):
+        if i % k == 0 :
+            result += 1
+            print(i)
+    return result
 
 
 def sum_digits(y):
@@ -81,6 +92,11 @@ def sum_digits(y):
     6
     """
     "*** YOUR CODE HERE ***"
+    sum = 0
+    while y > 0:
+        sum += (y % 10)
+        y //= 10
+    return sum
 
 
 def double_eights(n):
@@ -98,5 +114,12 @@ def double_eights(n):
     >>> double_eights(80808080)
     False
     """
-    "*** YOUR CODE HERE ***"
+    "*** YOUR CODE HERE ***" 
+#    while n >= 10:
+#        if n % 100 == 88:
+#            return True
+#        n //= 10
+#    return False
 
+    # 字符串写法
+    return '88' in str(n)
