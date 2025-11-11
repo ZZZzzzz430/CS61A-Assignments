@@ -25,6 +25,13 @@ def num_eights(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n == 0:
+        return 0
+    elif n % 10 == 8:
+        return num_eights(n // 10) + 1
+    else:
+        return num_eights(n // 10)
+    
 
 
 def digit_distance(n):
@@ -47,6 +54,11 @@ def digit_distance(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n < 10:
+        # 只有个位返回 0， 刚开始返回 n 的想法错误
+        return 0  
+    # 递归结果 + 绝对值  a = 个位， b = 十位， abs(a - b)
+    return digit_distance(n // 10) + abs((n % 10) - (n // 10 % 10))
 
 
 def interleaved_sum(n, odd_func, even_func):
@@ -71,7 +83,30 @@ def interleaved_sum(n, odd_func, even_func):
     True
     """
     "*** YOUR CODE HERE ***"
+#    def odd_sum(k, odd_func):
+#        if k < 1:
+#            return 0
+#        return odd_func(k) + odd_sum(k - 2, odd_func)
+#    def even_sum(k, even_func):
+#        if k < 2 :
+#            return 0
+#        return even_func(k) + even_sum(k - 2, odd_func)
+#
+#    if n % 2 == 0:
+#        return odd_sum(n - 1, odd_func) + even_sum(n, even_func)
+#    else:
+#        return odd_sum(n, odd_func) + even_sum(n - 1, even_func)
+#####################################################################
+#
+#   上面代码问题： 1. 使用  % 判断奇偶性 2. 没有左右交换的递归 
+#
+#####################################################################
 
+    def helper(i, f_curr, f_next):
+        if i > n :
+            return 0
+        return f_curr(i) + helper(i + 1, f_next, f_curr)
+    return helper(1, odd_func, even_func)
 
 def next_smaller_dollar(bill):
     """Returns the next smaller bill in order."""
@@ -143,6 +178,18 @@ def count_dollars_upward(total):
     True
     """
     "*** YOUR CODE HERE ***"
+    def count(coin, total):
+        if total == 0:
+            # 刚好凑齐
+            return 1
+        if total < 0 or coin is None:
+            # 数量多了，或者 没有硬币了
+            return 0
+
+        # 总数 = 当面面额 + 换更小的面额
+        return count(coin, total -coin) + count(next_larger_dollar(coin), total)
+
+    return count(1, total)
 
 
 def print_move(origin, destination):
