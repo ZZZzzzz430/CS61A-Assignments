@@ -38,6 +38,17 @@ def deep_map(f, s):
     True
     """
     "*** YOUR CODE HERE ***"
+    # Traverse the list
+    for i in range(len(s)):
+        # if item == list? 
+        item = s[i]
+        if type(item) == list:
+            # deep
+            deep_map(f, item)
+        else:
+            # x -> f(x)
+            s[i] = f(item)
+    return None
 
 
 HW_SOURCE_FILE=__file__
@@ -47,11 +58,13 @@ def planet(mass):
     """Construct a planet of some mass."""
     assert mass > 0
     "*** YOUR CODE HERE ***"
+    return ['planet', mass]
 
 def mass(p):
     """Select the mass of a planet."""
     assert is_planet(p), 'must call mass on a planet'
     "*** YOUR CODE HERE ***"
+    return p[1]
 
 def is_planet(p):
     """Whether p is a planet."""
@@ -104,7 +117,37 @@ def balanced(m):
     True
     """
     "*** YOUR CODE HERE ***"
+    # count the torque
+    assert is_mobile(m)
 
+    left_arm = left(m)
+    right_arm = right(m)
+
+    left_end = end(left_arm)
+    right_end = end(right_arm)
+    
+    left_torque = length(left_arm) * total_mass(left_end)
+    right_torque = length(right_arm) * total_mass(right_end)
+    
+    # left = right ? bool
+    torque_balanced = (left_torque == right_torque)
+
+
+
+    if is_mobile(left_end):
+        # is mobile -> left_end ->end ... -> planet
+        left_balanced = balanced(left_end)
+    else:
+        # end = planet -> true, 
+        left_balanced = True
+
+    if is_mobile(right_end):
+        right_balanced = balanced(right_end)
+    else:
+        right_balanced = True
+
+    # it is balance that all was Ture
+    return torque_balanced and left_balanced and right_balanced
 
 def berry_finder(t):
     """Returns True if t contains a node with the value 'berry' and 
@@ -124,6 +167,15 @@ def berry_finder(t):
     True
     """
     "*** YOUR CODE HERE ***"
+    # end 
+    if label(t) == 'berry':
+        return True
+    
+    for b in branches(t):
+        if berry_finder(b):
+            return Ture
+
+    return False
 
 
 HW_SOURCE_FILE=__file__
@@ -139,7 +191,12 @@ def max_path_sum(t):
     17
     """
     "*** YOUR CODE HERE ***"
+    # leaf，return leave's value
+    if is_leaf(t):
+        return label(t)
 
+    # not leaf , return Max of all Path
+    return label(t) + max(max_path_sum(b) for b in branches(t))
 
 def mobile(left, right):
     """Construct a mobile from a left arm and a right arm."""
