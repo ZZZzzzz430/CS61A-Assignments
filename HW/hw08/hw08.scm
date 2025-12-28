@@ -1,4 +1,8 @@
-(define (ascending? s) 'YOUR-CODE-HERE)
+(define (ascending? s)
+  (cond
+    ((null? s) #t)
+    ((null? (cdr s)) *t)
+    (else ???)))
 
 (define (my-filter pred s) 'YOUR-CODE-HERE)
 
